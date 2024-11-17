@@ -6,10 +6,10 @@
  * @package SelectLanguageOnRegister
  * @link https://github.com/dragomano/select-language-on-register
  * @author Bugo <bugo@dragomano.ru>
- * @copyright 2023 Bugo
+ * @copyright 2023-2024 Bugo
  * @license https://opensource.org/licenses/BSD-3-Clause The 3-Clause BSD License
  *
- * @version 0.1
+ * @version 0.2
  */
 
 namespace Bugo;
@@ -19,35 +19,46 @@ namespace Bugo;
  */
 class SelectLanguageOnRegister
 {
-	public function hooks()
+	public function hooks(): void
 	{
-		add_integration_function('integrate_load_custom_profile_fields', __CLASS__ . '::loadCustomProfileFields#', false, __FILE__);
-		add_integration_function('integrate_register', __CLASS__ . '::register#', false, __FILE__);
+		add_integration_function(
+			'integrate_load_custom_profile_fields',
+			__CLASS__ . '::loadCustomProfileFields#',
+			false,
+			__FILE__
+		);
+
+		add_integration_function(
+			'integrate_register',
+			__CLASS__ . '::register#',
+			false,
+			__FILE__
+		);
 	}
 
 	/**
 	 * @hook integrate_load_custom_profile_fields
 	 */
-	public function loadCustomProfileFields()
+	public function loadCustomProfileFields(): void
 	{
 		global $context, $language, $txt;
 
-		if (empty($context['languages']) || in_array($context['current_action'], array('admin', 'signup')) === false)
+		if (empty($context['languages']) || in_array($context['current_action'], ['admin', 'signup']) === false)
 			return;
 
 		loadLanguage('Profile');
 
 		$html = '';
 		foreach ($context['languages'] as $lang => $data) {
-			$html .= '<option value="' . $lang . '"' . ($language == $lang ? ' selected' : '') . '>' . $data['name'] . '</option>';
+			$html .= '<option value="' . $lang . '"' . ($data['selected'] ? ' selected' : '') . '>' . $data['name'] . '</option>';
 		}
 
-		$context['custom_fields'][] = array(
+		$context['custom_fields'][] = [
 			'name' => $txt['language'],
 			'desc' => $txt['preferred_language'],
 			'input_html' => '<select name="language" id="language">' . $html . '</select>',
 			'show_reg' => '2'
-		);
+		];
 
 		$context['custom_fields_required'] = true;
 	}
@@ -55,8 +66,8 @@ class SelectLanguageOnRegister
 	/**
 	 * @hook integrate_register
 	 */
-	public function register(&$regOptions)
+	public function register(array &$regOptions): void
 	{
-		$regOptions['register_vars']['lngfile'] = isset($_POST['language']) ? $_POST['language'] : '';
+		$regOptions['register_vars']['lngfile'] = $_POST['language'] ?? '';
 	}
 }
