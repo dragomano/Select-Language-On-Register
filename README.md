@@ -3,7 +3,7 @@
 ![License](https://img.shields.io/github/license/dragomano/select-language-on-register)
 ![Hooks only: Yes](https://img.shields.io/badge/Hooks%20only-YES-blue)
 
-* **Tested on:** PHP 8.0.24
+* **Tested on:** PHP 8.1.30
 
 ## Description
 This modification only works on forums with multiple interface languages. Adds a fake custom field for selecting the language when the new user is registering - it displayed both during manual registration through the admin, and during self-registration of users. After registering, the user will immediately get a forum with the interface language he wants.
