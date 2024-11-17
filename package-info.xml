@@ -4,7 +4,7 @@
 <package-info xmlns="http://www.simplemachines.org/xml/package-info" xmlns:smf="http://www.simplemachines.org/">
 	<id>Bugo:SelectLanguageOnRegister</id>
 	<name>SelectLanguageOnRegister</name>
-	<version>0.1</version>
+	<version>0.2</version>
 	<type>modification</type>
 
 	<install for="2.1.*">
@@ -16,8 +16,4 @@
 		<hook hook="integrate_pre_load" function="Bugo\SelectLanguageOnRegister::hooks#" file="$sourcedir/Class-SelectLanguageOnRegister.php" reverse="true"/>
 		<remove-file name="$sourcedir/Class-SelectLanguageOnRegister.php"/>
 	</uninstall>
-
-	<devtools>
-		<packagename>{CUSTOMIZATION_NAME}_{VERSION}</packagename>
-	</devtools>
 </package-info>
